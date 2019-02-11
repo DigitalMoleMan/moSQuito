@@ -18,18 +18,23 @@ function keypress() {
     if (input.arrowup) newNote.length++
     if (input.arrowdown) newNote.length--
 
-    if (input.enter) addNote(newNote)
+    if (input.enter) addNote(selector.x, selector.y);
+
+    if (input['+']) moveSelector(0, -12);
+    if (input['-']) moveSelector(0, 12);
 
     if (input[' ']) {
         play()
     } else {
-        playNote(newNote)
+        playNote(selector.y, newNote.type);
     }
 }
 
 function moveSelector(x, y){
     selector.x += x;
     selector.y += y;
+
+
 }
 
 arrayLoopB = (arr) => arr.unshift(arr.pop());

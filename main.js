@@ -50,6 +50,7 @@ var selector = {
 }
 
 function init(){
+    createTrack();
 loop();
 }
 
@@ -61,13 +62,13 @@ function loop(){
 
 var context = new AudioContext()
 
-function playNote(note) {
+function playNote(key, type) {
 
     var o = context.createOscillator()
     var g = context.createGain()
 
-    var f = frequencies[note.key]
-    var t = types[note.type]
+    var f = frequencies[key]
+    var t = types[type]
 
     o.frequency.value = f
     o.type = t
