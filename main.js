@@ -9,7 +9,6 @@ var newNote = {
     length: 1
 }
 
-
 var frequencies = [
     16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87,
     32.70, 34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 49.00, 51.91, 55.00, 58.27, 61.74,
@@ -46,16 +45,19 @@ var editor = {
 
 var selector = {
     x: 0,
-    y: 0
+    y: 0,
+    width: 1,
+    height: 1
 }
 
-function init(){
+function init() {
     createTrack();
-loop();
+    loop();
 }
 
-function loop(){
+function loop() {
     requestAnimationFrame(loop);
+    if (playing) playback();
     render();
 }
 
@@ -78,7 +80,6 @@ function playNote(key, type) {
     o.start(0)
 
     g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1)
-
 }
 
 init();
