@@ -3,7 +3,7 @@ tile = (n) => n * 32
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
 
-canvas.width = tile(24)
+canvas.width = tile(25)
 canvas.height = tile(16)
 console.log(Math.floor(window.innerWidth / 32))
 ctx.imageSmoothingEnabled = false;
@@ -25,7 +25,7 @@ var noteColors = [
 
 function render() {
 
-    //track area
+    /*Track*/
     fillRect(editor.x, editor.y, editor.width, editor.height, '#222')
 
     //measures
@@ -50,29 +50,34 @@ function render() {
     //Playhead
     if (playing) fillRect(playhead - editor.scroll.x, editor.y, 1, editor.height, '#ffffff80')
 
-    //beats
+    /*Top area*/
     fillRect(0, 0, canvas.width, 1, '#111')
+
+    //beats
     for (i = 0; i < editor.width; i++) {
-        drawText(editor.x + i + editor.scroll.x, editor.x + i, 0, '#fff')
+        drawText(editor.x + i + editor.scroll.x, editor.x + i, 0, '#fff', 16)
     }
 
+    /*Right area*/
+    fillRect(0, editor.y, 2, editor.height, '#111')
 
     //keys
-    fillRect(0, editor.y, 1, editor.height, '#111')
-    for (i = 0; i < keys.length; i++) {
 
-        drawText(keys[(i + editor.scroll.y) % keys.length], 0, editor.y + i, '#fff')
+    for (i = 0; i < keys.length; i++) {
+        drawText( Math.floor((i + editor.scroll.y) / keys.length), 0, editor.y + i, '#fff', 12)
+        drawText(keys[(i + editor.scroll.y) % keys.length], 1, editor.y + i, '#fff', 16)
+        
     }
 
     //Selector
     strokeRect(editor.x + selector.x, editor.y + selector.y, selector.width, selector.height, '#fff')
 
-    //bottom bar
+    /*Bottom area*/
     fillRect(0, 12, canvas.width, 6, '#111')
 
     //Wave Type
     drawImage(textures[types[newNote.type]], 3, 14);
-    drawText(types[newNote.type], 4, 14, '#fff')
+    drawText(types[newNote.type], 4, 14, '#fff', 32)
 
 
 
@@ -93,9 +98,9 @@ function strokeRect(x, y, width, height, color) {
     ctx.strokeRect(tile(x), tile(y), tile(width), tile(height))
 }
 
-function drawText(text, x, y, color) {
+function drawText(text, x, y, color, size) {
     ctx.fillStyle = color
-
+    ctx.font = size + 'px monospace'
     ctx.fillText(text, tile(x), tile(y))
 }
 

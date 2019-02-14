@@ -34,7 +34,7 @@ var types = [
 
 
 var editor = {
-    x: 1,
+    x: 2,
     y: 1,
     width: 23,
     height: keys.length,
@@ -62,32 +62,6 @@ function loop() {
 }
 
 
-/*
-var notes = new Array;
-
-
-initNotes()
-
-function initNotes(){
-    for(i=0;i<frequencies.length;i++){
-        for(t=0;t<types.length;t++){
-            var o = context.createOscillator()
-            var g = context.createGain()
-
-            o.frequency.value = frequencies[i]
-            o.type = types[t]
-
-            o.connect(g)
-            g.connect(context.destination)
-            g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1)
-            notes.push(o)
-
-        }
-    }
-}
-*/
-
-
 function playNote(key, type) {
 
     var o = context.createOscillator()
@@ -105,7 +79,7 @@ function playNote(key, type) {
 
     g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1)
 
-    context.close()
+    o.stop(context.currentTime + 2)
 }
 
 init();

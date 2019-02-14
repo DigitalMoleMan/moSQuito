@@ -6,11 +6,6 @@ var playhead = new Number;
 function createTrack() {
 	for (x = 0; x < 64; x++) {
 		track.push([])
-		/*
-		for (k = 0; k < frequencies.length; k++) {
-			track[x].push(0);
-		}
-		*/
 	}
 }
 
@@ -45,4 +40,4 @@ setInterval(() => {
 	if (playing) {
 		playback();
 	}
-}, 120)
+}, 166)
