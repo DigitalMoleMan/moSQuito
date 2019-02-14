@@ -23,6 +23,8 @@ var noteColors = [
     '#f8f'
 ]
 
+
+
 function render() {
 
     /*Track*/
@@ -55,7 +57,7 @@ function render() {
 
     //beats
     for (i = 0; i < editor.width; i++) {
-        drawText(editor.x + i + editor.scroll.x, editor.x + i, 0, '#fff', 16)
+        drawText(1 + i + editor.scroll.x, editor.x + i, 0, '#fff', 16)
     }
 
     /*Right area*/
@@ -82,10 +84,6 @@ function render() {
 
 
 }
-
-
-
-
 
 function fillRect(x, y, width, height, color) {
     ctx.fillStyle = color;

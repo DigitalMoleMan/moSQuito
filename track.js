@@ -10,7 +10,7 @@ function createTrack() {
 }
 
 function addNote(x, k, t) {
-	//console.log("add" + ' ' + x + ' ' + k + ' ' + t);
+	//log("add" + ' ' + x + ' ' + k + ' ' + t);
 	track[x].push({
 		key: k,
 		type: t
@@ -18,7 +18,7 @@ function addNote(x, k, t) {
 }
 
 function removeNote(x, k) {
-	console.log(x + ' ' + k)
+	log(x + ' ' + k)
 	track[x].splice(0);
 }
 

@@ -1,5 +1,4 @@
-var debug = false;
-
+log = (text) => console.log(text);
 
 var context = new AudioContext()
 
