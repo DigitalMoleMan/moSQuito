@@ -1,12 +1,12 @@
 var debug = false;
 
 
+var context = new AudioContext()
 
 var newNote = {
-    x: 1,
-    key: 1,
-    type: 0,
-    length: 1
+    time: 1, // x cord on track
+    key: 1, // y cord on track
+    type: 1
 }
 
 var frequencies = [
@@ -24,6 +24,7 @@ var frequencies = [
 keys = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'G#', 'A', 'Bb', 'B'];
 
 var types = [
+    'none',
     'sine',
     'square',
     'triangle',
@@ -57,12 +58,35 @@ function init() {
 
 function loop() {
     requestAnimationFrame(loop);
-    if (playing) playback();
     render();
 }
 
 
-var context = new AudioContext()
+/*
+var notes = new Array;
+
+
+initNotes()
+
+function initNotes(){
+    for(i=0;i<frequencies.length;i++){
+        for(t=0;t<types.length;t++){
+            var o = context.createOscillator()
+            var g = context.createGain()
+
+            o.frequency.value = frequencies[i]
+            o.type = types[t]
+
+            o.connect(g)
+            g.connect(context.destination)
+            g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1)
+            notes.push(o)
+
+        }
+    }
+}
+*/
+
 
 function playNote(key, type) {
 
@@ -80,6 +104,8 @@ function playNote(key, type) {
     o.start(0)
 
     g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1)
+
+    context.close()
 }
 
 init();

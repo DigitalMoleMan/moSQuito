@@ -4,24 +4,27 @@ var playing = false;
 var playhead = new Number;
 
 function createTrack() {
-	for (x = 0; x < 1280; x++) {
+	for (x = 0; x < 64; x++) {
 		track.push([])
+		/*
+		for (k = 0; k < frequencies.length; k++) {
+			track[x].push(0);
+		}
+		*/
 	}
 }
 
-onTrack = (x) => track[x];
-
-function addNote(x, key, type) {
+function addNote(x, k, t) {
+	//console.log("add" + ' ' + x + ' ' + k + ' ' + t);
 	track[x].push({
-		key: key,
-		type: type
+		key: k,
+		type: t
 	})
 }
 
-
-//OK, IM GONNA FIX THIS IN A BIT YEAH
-function removeNote(x, y) {
-	//track.findIndex((y) => y = )
+function removeNote(x, k) {
+	console.log(x + ' ' + k)
+	track[x].splice(0);
 }
 
 function playTrack() {
@@ -30,16 +33,16 @@ function playTrack() {
 }
 
 function playback() {
-
-	var note = track[playhead]
-
-	console.log(note);
-	if (track[playhead].hasNote) playNote(note.key, note.type);
-	if (playhead < track.length) {
-		playhead++;
-	} else {
-		playing = false;
+	for (i = 0; i < track[playhead].length; i++) {
+			playNote(track[playhead][i].key, track[playhead][i].type);
 	}
+	if (playhead >= track.length) playing = false;
 
-
+	playhead++
 }
+
+setInterval(() => {
+	if (playing) {
+		playback();
+	}
+}, 120)

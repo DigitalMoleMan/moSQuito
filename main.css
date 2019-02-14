@@ -1,11 +1,10 @@
 body{
     margin: 0;
-    background-color: #222;
+    background-color: #000;
 }
 
 canvas {
     position: relative;
     display: block;
     margin: 0 auto;
-    top: 5rem;
 }
