@@ -1,53 +1,79 @@
+/*
+	moSQuito - input
+*/
+
 const input = new Object;
+
+var keybinds = {
+    trackEditor: {
+        up: 'w',
+        down: 's',
+        left: 'a',
+        right: 'd',
+        addNote: ' ',
+        removeNote: 'delete',
+        play: 'enter',
+    },
+}
+
 document.addEventListener('keydown', (event) => {
-    input[event.key.toLowerCase()] = true
+    var pressedKey = event.key.toLocaleLowerCase();
+    //log(pressedKey);
+    input[pressedKey] = true
 
-    if (input.w) moveSelector(0, -1);
-    if (input.s) moveSelector(0, 1);
+    if (input[keybinds.trackEditor.up]) moveSelector(0, -1);
+    if (input[keybinds.trackEditor.down]) moveSelector(0, 1);
 
-    if (input.a) moveSelector(-1, 0);
-    if (input.d) moveSelector(1, 0);
+    if (input[keybinds.trackEditor.left]) moveSelector(-1, 0);
+    if (input[keybinds.trackEditor.right]) moveSelector(1, 0);
+
+    if (input[keybinds.trackEditor.play]) playComp();
+
+    if (input[keybinds.trackEditor.addNote]) {
+        addNote(selector.x + selector.scroll.x, selector.y + selector.scroll.y, waveform, perc)
+    }
+    if (input[keybinds.trackEditor.removeNote]) {
+        removeNote(selector.x + selector.scroll.x, selector.y + selector.scroll.y)
+    }
 
     if (input.arrowleft) {
-        if (newNote.type > 1) newNote.type--
+        if (waveform > 0) waveform--
     }
     if (input.arrowright) {
-        if (newNote.type < types.length - 1) newNote.type++
+        if (waveform < types.length - 1) waveform++
     }
-    if (input.arrowup) newNote.length++
-    if (input.arrowdown) newNote.length--
+    if (input['+']) wavelength++
+    if (input['-']) wavelength--
 
-    if (input.enter) playTrack();
+    if (input['.']) mod++
+    if (input[',']) mod--
 
-    if (input[' ']) addNote(selector.x + editor.scroll.x, selector.y + editor.scroll.y, newNote.type);
-    if (input.x) removeNote(selector.x + editor.scroll.x, selector.y + editor.scroll.y);
-
-    if (!playing) playNote(selector.y + editor.scroll.y, newNote.type);
+    if (input.p) perc = !perc
 
 })
-document.addEventListener('keyup', (event) => {
-    input[event.key.toLowerCase()] = false;
-})
+document.addEventListener('keyup', (event) => input[event.key.toLowerCase()] = false)
 
 function moveSelector(x, y) {
+
     selector.x += x;
     selector.y += y;
 
     if (selector.x < 0) {
         selector.x++
-        if (editor.scroll.x > 0) editor.scroll.x--
+        if (selector.scroll.x > 0) selector.scroll.x--
     }
-    if (selector.x >= editor.width) {
+    if (selector.x >= ui.track.width) {
         selector.x--
-        if ((editor.width + editor.scroll.x) <= track.length) editor.scroll.x++
+        selector.scroll.x++
     }
     if (selector.y < 0) {
         selector.y++
-        if (editor.scroll.y > 0) editor.scroll.y--
+        if (selector.scroll.y > 0) selector.scroll.y--
     }
-    if (selector.y >= editor.height - 1) {
+    if (selector.y >= ui.track.height) {
         selector.y--
-        if ((editor.height + editor.scroll.y) <= frequencies.length) editor.scroll.y++
+        if ((ui.track.height + selector.scroll.y) <= frequencies.length) selector.scroll.y++
     }
 
+    playNote(selector.y + selector.scroll.y, waveform, wavelength);
 }

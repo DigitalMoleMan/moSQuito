@@ -1,12 +1,11 @@
+/*
+	moSQuito - main
+*/
+
 log = (text) => console.log(text);
 
 var context = new AudioContext()
 
-var newNote = {
-    time: 1, // x cord on track
-    key: 1, // y cord on track
-    type: 1
-}
 
 var frequencies = [
     16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87,
@@ -23,31 +22,21 @@ var frequencies = [
 keys = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'G#', 'A', 'Bb', 'B'];
 
 var types = [
-    'none',
     'sine',
     'square',
     'triangle',
     'sawtooth'
 ]
 
-
-
-var editor = {
-    x: 2,
-    y: 1,
-    width: 23,
-    height: keys.length,
-    scroll: {
-        x: 0,
-        y: 0
-    }
-}
-
 var selector = {
     x: 0,
     y: 0,
     width: 1,
-    height: 1
+    height: 1,
+    scroll: {
+        x: 0,
+        y: 0
+    }
 }
 
 function init() {
@@ -57,11 +46,10 @@ function init() {
 
 function loop() {
     requestAnimationFrame(loop);
-    render();
+    render(showView);
 }
 
-
-function playNote(key, type) {
+function playNote(key, type, wavel) {
 
     var o = context.createOscillator()
     var g = context.createGain()
@@ -74,11 +62,15 @@ function playNote(key, type) {
 
     o.connect(g)
     g.connect(context.destination)
-    o.start(0)
+    o.start(context.currentTime)
 
-    g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1)
+    o.frequency.exponentialRampToValueAtTime(.00001, context.currentTime + mod);
 
-    o.stop(context.currentTime + 2)
+    g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + (wavelength / 100))
+
+    o.stop(context.currentTime + 0.5)
 }
+
+
 
 init();
